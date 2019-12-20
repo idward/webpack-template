@@ -26,7 +26,7 @@ module.exports = merge(basicConfig, {
       new TerserWebpackPlugin()
     ],
     usedExports: true,
-    sideEffects: false
+    // sideEffects: false
   },
   plugins: [
     new webpack.DefinePlugin({
