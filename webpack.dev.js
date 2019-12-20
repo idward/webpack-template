@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const basicConfig = require('./webpack.common');
 
 module.exports = merge(basicConfig, {
-  mode: 'development',
   devtool: 'eval-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),

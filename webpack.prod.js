@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(basicConfig, {
-  mode: 'production',
   devtool: 'cheap-source-map',
   optimization: {
     minimize: true,
@@ -12,7 +11,12 @@ module.exports = merge(basicConfig, {
       new UglifyJSPlugin({
         uglifyOptions: {
           compress: {
-            drop_console: true
+            drop_console: true,
+            unused: true
+          },
+          mangle: false,
+          output: {
+            beautify: true
           }
         }
       })

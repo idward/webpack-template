@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config webpack.dev.js",
+    "dev": "NODE_ENV=development webpack-dev-server --config webpack.dev.js",
     "prod": "npm run build && http-server ./dist",
-    "build": "webpack --config webpack.prod.js"
+    "build": "NODE_ENV=production webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",
