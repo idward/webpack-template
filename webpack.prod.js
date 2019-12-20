@@ -1,26 +1,32 @@
-const merge = require('webpack-merge');
-const basicConfig = require('./webpack.common');
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const merge = require("webpack-merge");
+const basicConfig = require("./webpack.common");
+const webpack = require("webpack");
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+// const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = merge(basicConfig, {
-  devtool: 'cheap-source-map',
+  mode: "production",
+  // devtool: "cheap-source-map",
   optimization: {
-    minimize: true,
+    // minimize: true,
+    // minimizer: [
+    //   new UglifyJSPlugin({
+    //     uglifyOptions: {
+    //       compress: {
+    //         drop_console: true,
+    //       },
+    //       // mangle: false,
+    //       output: {
+    //         beautify: true
+    //       }
+    //     }
+    //   })
+    // ],
     minimizer: [
-      new UglifyJSPlugin({
-        uglifyOptions: {
-          compress: {
-            drop_console: true,
-            unused: true
-          },
-          mangle: false,
-          output: {
-            beautify: true
-          }
-        }
-      })
-    ]
+      new TerserWebpackPlugin()
+    ],
+    usedExports: true,
+    sideEffects: false
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -28,4 +34,4 @@ module.exports = merge(basicConfig, {
     }),
     new webpack.NoEmitOnErrorsPlugin()
   ]
-})
+});

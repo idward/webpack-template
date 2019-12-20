@@ -1,17 +1,21 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, "src", "index.jsx"),
+  entry: {
+    index: path.resolve(__dirname, "src", "index.jsx"),
+    main: path.resolve(__dirname, "src", "main.js")
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: function() {
-      console.log("AAAAAAA:", process.env.NODE_ENV);
-      return process.env.NODE_ENV === "production"
+    publicPath: "/",
+    filename:
+      process.env.NODE_ENV === "production"
         ? "[name].[chunkhash].js"
-        : "[name].[hash].js";
-    }
+        : "[name].[hash].js",
+    chunkFilename: "[name].[chunkhash].js"
   },
   module: {
     rules: [
@@ -96,6 +100,7 @@ module.exports = {
         process.env.NODE_ENV === "production"
           ? "[name].[chunkhash].css"
           : "[name].css"
-    })
+    }),
+    new WebpackMd5Hash()
   ]
 };
