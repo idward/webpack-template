@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -49,6 +50,9 @@ module.exports = {
             loader: "css-loader"
           },
           {
+            loader: "postcss-loader"
+          },
+          {
             loader: "sass-loader"
           }
         ]
@@ -74,9 +78,9 @@ module.exports = {
     extensions: ["*", ".js", ".jsx"]
   },
   externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'lodash': '_'
+    react: "React",
+    "react-dom": "ReactDOM",
+    lodash: "_"
   },
   optimization: {
     splitChunks: {
@@ -95,6 +99,10 @@ module.exports = {
     }
   },
   plugins: [
+    new CleanWebpackPlugin({
+      dry: false,
+      // cleanAfterEveryBuildPatterns:['dist']
+    }),
     new HtmlWebpackPlugin({
       // title: 'Webpack Tour',
       filename: "index.html",
@@ -104,7 +112,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename:
         process.env.NODE_ENV === "production"
-          ? "[name].[chunkhash].css"
+          ? "[name].[contenthash].css"
           : "[name].css"
     }),
     new WebpackMd5Hash()
